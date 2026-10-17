@@ -1,0 +1,64 @@
+name: Deploy Project Archive to GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Import initial website source
+        if: hashFiles('site-source.zip') != ''
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          root = Path.cwd().resolve()
+          with ZipFile('site-source.zip') as archive:
+              for info in archive.infolist():
+                  path = Path(info.filename)
+                  if not path.parts or path.parts[0] != 'website' or '..' in path.parts:
+                      raise ValueError('Unexpected archive path')
+                  relative = Path(*path.parts[1:])
+                  if not relative.parts or relative.parts[0] == '.github' or info.is_dir():
+                      continue
+                  target = (root / relative).resolve()
+                  if not target.is_relative_to(root):
+                      raise ValueError('Archive path outside repository')
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(archive.read(info))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm site-source.zip
+          git add .
+          git commit -m 'Import verified website source'
+          git push origin HEAD:main
+      - name: Install, validate and build
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+          package-manager: npm@12.2.0
+          build-cmd: npm test && npm run build
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          BASE_PATH: ${{ vars.BASE_PATH }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5
