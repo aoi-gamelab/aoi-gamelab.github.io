@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource/noto-sans-jp/400.css';
+import '@fontsource/noto-sans-jp/700.css';
+import {site,pathTo,imagePath} from '../lib/site';
+import { resolveDeployment } from '../../lib/deployment.mjs';
+import Brand from '../components/Brand.astro';
+import Icon from '../components/Icon.astro';
+interface Props { title?: string; description?: string; image?: string; }
+const {title,description=site.description,image=site.ogImage}=Astro.props;
+const fullTitle=title?`${title} — ${site.name}`: `${site.name} — 作って、見せて、配布する。`;
+const current=Astro.url.pathname;
+const deployment=resolveDeployment(site.deployment);
+const canonical=new URL(current,Astro.site);
+const og=new URL(imagePath(image.endsWith('.svg')?site.ogImage:image),Astro.site);
+const nav=[['HOME',''],['PROJECTS','projects/'],['ABOUT','about/']];
+---
+<!doctype html>
+<html lang="ja">
+<head>
+ <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <title>{fullTitle}</title><meta name="description" content={description}/>
+ {deployment.public ? <link rel="canonical" href={canonical}/> : <meta name="robots" content="noindex,nofollow"/>}
+ <meta property="og:type" content="website"/><meta property="og:title" content={fullTitle}/><meta property="og:description" content={description}/><meta property="og:site_name" content={site.name}/><meta property="og:locale" content="ja_JP"/><meta property="og:image" content={og}/><meta property="og:url" content={canonical}/><meta name="twitter:card" content="summary_large_image"/>
+ <meta name="theme-color" content="#0B0D12"/><link rel="icon" type="image/svg+xml" href={pathTo('favicon.svg')}/>
+</head>
+<body>
+ <a class="skip-link" href="#main">本文へ移動</a>
+ <header class="site-header">
+  <div class="container header-inner"><Brand/>
+   <button class="menu-toggle" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav"><Icon name="menu"/></button>
+   <nav id="site-nav" aria-label="メインナビゲーション">
+    {nav.map(([label,path])=><a class:list={['nav-link',{active: path ? current.includes(`/${path}`) : current===pathTo()}]} aria-current={(path?current.includes(`/${path}`):current===pathTo())?'page':undefined} href={pathTo(path)}>{label}</a>)}
+    {site.youtubeUrl ? <a class="nav-youtube" href={site.youtubeUrl} target="_blank" rel="noopener noreferrer"><Icon name="youtube" size={18}/>YouTube<Icon name="external" size={14}/></a> : <span class="nav-youtube muted" title="チャンネルURLは準備中です"><Icon name="youtube" size={18}/>YouTube <small>準備中</small></span>}
+   </nav>
+  </div>
+ </header>
+ <main id="main"><slot/></main>
+ <footer class="site-footer"><div class="container">
+  <div class="footer-main"><div><Brand/><p>アイデアを、動くものに。<br/>制作の過程も、完成したその先も。</p></div><div class="footer-links"><div><span>EXPLORE</span>{nav.map(([label,path])=><a href={pathTo(path)}>{label}</a>)}</div><div><span>FOLLOW</span>{site.youtubeUrl?<a href={site.youtubeUrl} target="_blank" rel="noopener noreferrer">YouTube <Icon name="external" size={14}/></a>:<span>YouTube 準備中</span>}{site.githubUrl?<a href={site.githubUrl} target="_blank" rel="noopener noreferrer">GitHub <Icon name="external" size={14}/></a>:<span>GitHub 準備中</span>}</div></div></div>
+  <div class="footer-bottom"><span>© {new Date().getUTCFullYear()} {site.channelName}</span><span>BUILT WITH CURIOSITY. SHARED WITH YOU.</span><a href="#main">BACK TO TOP ↑</a></div>
+ </div></footer>
+ <script>
+  const header=document.querySelector<HTMLElement>('.site-header');
+  const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav=document.querySelector<HTMLElement>('#site-nav');
+  const close=()=>{toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','メニューを開く');nav?.classList.remove('is-open');};
+  toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く');nav?.classList.toggle('is-open',open);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle?.getAttribute('aria-expanded')==='true'){close();toggle.focus();}});
+  nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+  document.addEventListener('click',e=>{if(e.target instanceof Node&&!header?.contains(e.target))close();});
+  const updateHeader=()=>header?.classList.toggle('scrolled',window.scrollY>12);updateHeader();window.addEventListener('scroll',updateHeader,{passive:true});
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
+   const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');observer.unobserve(e.target);}});},{threshold:.08});
+   document.querySelectorAll('[data-reveal]').forEach(e=>{e.classList.add('will-reveal');observer.observe(e);});
+  }
+  const fallback=document.querySelector<HTMLLinkElement>('link[rel="icon"]')?.href.replace('favicon.svg','images/fallback.svg');
+  document.querySelectorAll<HTMLImageElement>('img').forEach(img=>img.addEventListener('error',()=>{if(fallback&&img.src!==fallback)img.src=fallback;},{once:true}));
+ </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "slug": "dxlib-first-step",
+  "title": "C++とDxLib、最初の一歩",
+  "subtitle": "C++ × DxLib / EPISODE 01",
+  "description": "開発環境の準備から、はじめての円描画まで。ゲーム制作を始めるための最小プロジェクト。",
+  "category": "GAME",
+  "technologies": [
+    "C++",
+    "DxLib",
+    "Visual Studio"
+  ],
+  "status": "公開中",
+  "publishedAt": "2026-10-17",
+  "updatedAt": "2026-10-17",
+  "featured": true,
+  "demo": false,
+  "thumbnail": "/images/dxlib-first-step.webp",
+  "heroImage": "/images/dxlib-first-step.webp",
+  "screenshots": [
+    {
+      "src": "/images/first-run.webp",
+      "alt": "DxLibで最初の緑の円を描いた実行画面"
+    },
+    {
+      "src": "/images/first-code.webp",
+      "alt": "最初の円描画サンプルをVisual Studioで表示した画面"
+    }
+  ],
+  "overview": [
+    "C++でゲームを作ってみたい人へ。Visual StudioとDxLibの導入を終えたあと、「ウィンドウに円を表示する」までを小さく試すプロジェクトです。",
+    "初期化、描画、キー入力待ち、終了処理の役割を読みながら、最初の「動いた」を確かめてみてください。"
+  ],
+  "features": [
+    "640×480のウィンドウ表示",
+    "DrawCircleで塗りつぶした円を描画",
+    "キー入力を待って終了"
+  ],
+  "technicalNotes": [
+    "画像ファイルを用意せず、図形を描く関数から始めます。",
+    "静的ランタイムを使うプロジェクト設定。DxLib本体は同梱していません。"
+  ],
+  "youtubeUrl": "",
+  "downloadUrl": "https://github.com/aoi-gamelab/aoi-gamelab.github.io/releases/download/v1.0.0/dxlib-first-step-v1.0.0.zip",
+  "fileName": "dxlib-first-step-v1.0.0.zip",
+  "fileSize": 2976,
+  "version": "1.0.0",
+  "platform": [
+    "Windows 11"
+  ],
+  "requirements": [
+    "Visual Studio Community 2026",
+    "C++によるデスクトップ開発",
+    "DxLib Visual C++版 3.25a"
+  ],
+  "installationSteps": [
+    "ZIPを展開し、READMEを確認します。",
+    "公式のDxLib Visual C++版を入手し、READMEの配置例に合わせるか、プロパティの参照先を変更します。",
+    "DxLibTutorial.slnxをVisual Studioで開きます。",
+    "Debug / x64でビルド・実行して、緑の円が出ることを確認します。"
+  ],
+  "changelog": [
+    {
+      "date": "2026-10-17",
+      "version": "1.0.0",
+      "changes": [
+        "最初の円描画サンプルを作成。",
+        "Debug / Releaseのx64ビルドを確認。"
+      ]
+    }
+  ]
+}

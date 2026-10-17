@@ -1,0 +1,23 @@
+---
+import type { Project } from '../lib/site';
+import {pathTo,imagePath,dateLabel} from '../lib/site';
+import Icon from './Icon.astro';
+interface Props { project: Project; index?: number; }
+const {project:p,index=0}=Astro.props;
+---
+<article class="project-card" data-project-card data-slug={p.slug} data-title={p.title} data-subtitle={p.subtitle} data-description={p.description} data-category={p.category} data-technologies={JSON.stringify(p.technologies)} data-date={p.publishedAt} style={`--card-order:${index%6}`}>
+  <a class="card-link" href={pathTo(`projects/${p.slug}/`)}>
+    <div class="card-visual">
+      <img src={imagePath(p.thumbnail)} width="960" height="540" loading="lazy" decoding="async" alt={`${p.title}のプレビュー`}/>
+      <span class="card-category">{p.category}</span>
+      {p.demo && <span class="demo-label">DEMO DATA</span>}
+      <span class="card-open"><Icon name="external" size={21}/></span>
+    </div>
+    <div class="card-body">
+      <div class="card-meta"><time datetime={p.publishedAt}>{dateLabel(p.publishedAt)}</time><span class:list={['status',{ready:!!p.downloadUrl}]}>{p.status}</span></div>
+      <h3>{p.title}</h3>
+      <p>{p.description}</p>
+      <div class="tags">{p.technologies.slice(0,4).map(tag=><span>{tag}</span>)}</div>
+    </div>
+  </a>
+</article>

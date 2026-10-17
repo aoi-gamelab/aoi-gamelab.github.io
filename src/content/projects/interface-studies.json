@@ -1,0 +1,44 @@
+{
+  "slug": "interface-studies",
+  "title": "Interface Studies",
+  "subtitle": "SAMPLE PROJECT / DEMO",
+  "description": "情報の見やすさと操作の心地よさを探る、インターフェースの習作。",
+  "category": "UI",
+  "technologies": [
+    "TypeScript",
+    "Web"
+  ],
+  "status": "デモ",
+  "publishedAt": "2026-10-04",
+  "updatedAt": "2026-10-04",
+  "featured": true,
+  "demo": true,
+  "thumbnail": "/images/interface-kit.svg",
+  "heroImage": "/images/interface-kit.svg",
+  "screenshots": [
+    {
+      "src": "/images/interface-kit.svg",
+      "alt": "Interface Studiesの自作コンセプト図"
+    }
+  ],
+  "overview": [
+    "このページは、作品ギャラリーの表示と操作を確認するための架空のサンプルデータです。実際の制作実績・公開済みソフトウェアではありません。",
+    "実際の作品を登録する際は、このJSONを差し替えるか削除してください。ダウンロードURLや動画URLは設定していません。"
+  ],
+  "features": [
+    "カテゴリ・技術タグによる分類の表示例",
+    "作品紹介とスクリーンショットの表示例"
+  ],
+  "technicalNotes": [
+    "実装済みソフトウェアではなく、サイトのデータ管理を説明するためのデモです。"
+  ],
+  "youtubeUrl": "",
+  "downloadUrl": "",
+  "fileName": "",
+  "fileSize": 0,
+  "version": "",
+  "platform": [],
+  "requirements": [],
+  "installationSteps": [],
+  "changelog": []
+}

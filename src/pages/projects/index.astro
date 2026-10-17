@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Icon from '../../components/Icon.astro';
+import {allProjects} from '../../lib/site';
+import {categoryLabels} from '../../../lib/project-utils.mjs';
+const projects=await allProjects();
+const technologies=[...new Set(projects.flatMap(p=>p.technologies))].sort();
+---
+<Layout title="作品一覧" description="ゲーム・ツール・実験の制作プロジェクトを探す。技術やカテゴリで絞り込み、完成コードや制作動画へ。">
+ <section class="page-heading container"><p class="eyebrow">THE COLLECTION / {String(projects.length).padStart(2,'0')} PROJECTS</p><h1>Project archive<span class="purple-period">.</span></h1><p>気になるアイデアから、次の一歩を。<br/>制作の記録と、手を動かすためのプロジェクト。</p></section>
+ <section class="container archive-section" data-project-browser>
+  <form class="filters" role="search" aria-label="作品を検索" onsubmit="return false">
+   <div class="search-field"><Icon name="search"/><label class="sr-only" for="project-search">キーワード検索</label><input type="search" id="project-search" placeholder="作品名、キーワード、技術で探す" autocomplete="off"/></div>
+   <div class="filter-select"><label for="technology">TECHNOLOGY</label><select id="technology"><option value="">すべての技術</option>{technologies.map(t=><option value={t}>{t}</option>)}</select></div>
+   <div class="filter-select"><label for="sort-order">SORT BY</label><select id="sort-order"><option value="newest">新しい順</option><option value="oldest">古い順</option></select></div>
+   <div class="category-filter" aria-label="カテゴリ"><button type="button" data-category="" aria-pressed="true">ALL <span>{projects.length}</span></button>{Object.entries(categoryLabels).map(([key,label])=><button type="button" data-category={key} aria-pressed="false" title={label}>{key}</button>)}</div>
+  </form>
+  <div class="results-toolbar"><p role="status" aria-live="polite" aria-atomic="true"><strong id="result-count">{projects.length}</strong> projects<span id="filter-summary"> / すべての作品</span></p><button type="button" class="reset-button" id="reset-filters">フィルタをリセット <Icon name="close" size={14}/></button></div>
+  <noscript><p class="notice">すべての作品を表示しています。検索・絞り込みにはJavaScriptを有効にしてください。</p></noscript>
+  <div class="project-grid" id="project-grid">{projects.map((p,index)=><ProjectCard project={p} index={index}/>)}</div>
+  <div class="empty-state" id="empty-state" hidden><Icon name="search" size={36}/><h2>作品が見つかりませんでした</h2><p>別のキーワードを試すか、絞り込みを解除してください。</p><button type="button" class="button button-outline" id="empty-reset">すべての作品を表示 <Icon name="arrow"/></button></div>
+  {projects.some(p=>p.demo)&&<p class="demo-note">DEMO DATA表記の作品は表示確認用です。配布ファイル・制作動画はありません。</p>}
+ </section>
+ <script>
+  import {matchesProject,sortProjects} from '../../../lib/project-utils.mjs';
+  const root=document.querySelector('[data-project-browser]');
+  if(root){
+   const search=root.querySelector<HTMLInputElement>('#project-search')!;
+   const tech=root.querySelector<HTMLSelectElement>('#technology')!;
+   const order=root.querySelector<HTMLSelectElement>('#sort-order')!;
+   const grid=root.querySelector<HTMLElement>('#project-grid')!;
+   const buttons=[...root.querySelectorAll<HTMLButtonElement>('.category-filter button[data-category]')];
+   const cards=[...grid.querySelectorAll<HTMLElement>('[data-project-card]')];
+   const entries=cards.map(card=>({slug:card.dataset.slug!,title:card.dataset.title!,subtitle:card.dataset.subtitle!,description:card.dataset.description!,category:card.dataset.category!,technologies:JSON.parse(card.dataset.technologies!),publishedAt:card.dataset.date!,card}));
+   let category='';
+   const params=new URLSearchParams(location.search);
+   search.value=params.get('q')||'';
+   if([...tech.options].some(o=>o.value===params.get('tech')))tech.value=params.get('tech')||'';
+   if(params.get('sort')==='oldest')order.value='oldest';
+   if(buttons.some(b=>b.dataset.category===params.get('category')))category=params.get('category')||'';
+   function update(){
+    let count=0;
+    sortProjects(entries,order.value).forEach(p=>{const visible=matchesProject(p,{query:search.value,category,technology:tech.value});p.card.hidden=!visible;grid.append(p.card);if(visible)count++;});
+    root!.querySelector('#result-count')!.textContent=String(count);
+    root!.querySelector('#filter-summary')!.textContent=count===entries.length?' / すべての作品':' / 絞り込み結果';
+    (root!.querySelector('#empty-state') as HTMLElement).hidden=count!==0;
+    buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.category===category)));
+    const p=new URLSearchParams();if(search.value)p.set('q',search.value);if(category)p.set('category',category);if(tech.value)p.set('tech',tech.value);if(order.value!=='newest')p.set('sort',order.value);
+    history.replaceState(null,'',location.pathname+(p.size?'?'+p.toString():''));
+   }
+   const reset=()=>{search.value='';tech.value='';order.value='newest';category='';update();search.focus();};
+   search.addEventListener('input',update);tech.addEventListener('change',update);order.addEventListener('change',update);
+   buttons.forEach(b=>b.addEventListener('click',()=>{category=b.dataset.category||'';update();}));
+   root.querySelector('#reset-filters')?.addEventListener('click',reset);root.querySelector('#empty-reset')?.addEventListener('click',reset);update();
+  }
+ </script>
+</Layout>

@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Icon from '../components/Icon.astro';
+import {allProjects,pathTo,imagePath,dateLabel,site} from '../lib/site';
+const projects=await allProjects();
+const featured=projects.filter(p=>p.featured).slice(0,6);
+const latest=projects.filter(p=>!p.demo).slice(0,3);
+---
+<Layout>
+ <section class="hero container">
+  <div class="hero-copy"><p class="eyebrow"><span class="live-dot"></span> INDEPENDENT CREATIVE LAB</p>
+   <h1>作って、<br/>見せて、<span class="accent-word">配布する。</span></h1>
+   <p class="hero-description">ゲーム、ツール、ソフトウェア。<br class="desktop-break"/>制作の過程を動画で公開し、完成したプロジェクトを無料配布しています。</p>
+   <div class="hero-actions"><a class="button button-primary" href={pathTo('projects/')}>作品を見る <Icon name="external"/></a>{site.youtubeUrl?<a class="button button-outline" href={site.youtubeUrl} target="_blank" rel="noopener noreferrer"><Icon name="youtube"/> YouTubeを見る</a>:<span class="button button-outline disabled" aria-disabled="true"><Icon name="youtube"/> YouTube 準備中</span>}</div>
+   <div class="hero-footnote"><span class="tiny-label">EXPLORE · LEARN · BUILD</span><span>小さな一歩から、次の作品へ。</span></div>
+  </div>
+  <div class="hero-stage" aria-label="C++で円を動かす制作サンプル">
+   <div class="stage-orbit orbit-one"></div><div class="stage-orbit orbit-two"></div>
+   <div class="stage-window"><div class="window-bar"><span><i></i><i></i><i></i></span><span>MOVE_CIRCLE / PREVIEW</span><Icon name="code" size={16}/></div><div class="stage-canvas"><img src={imagePath('/images/gameplay.webp')} alt="DxLibで円を描き、座標を表示した実行画面" width="640" height="480" fetchpriority="high"/><span class="canvas-coordinate">320, 240</span></div><div class="window-bottom"><span class="live-dot"></span> C++ / DxLib <span>PROJECT 002</span></div></div>
+   <div class="floating-code"><span class="tiny-label">INPUT → UPDATE → DRAW</span><code><span>if</span> (rightKey)<br/>&nbsp; playerX <em>+=</em> speed;</code><div><span></span> アイデアが、動き出す。</div></div>
+   <div class="stage-label"><span class="crosshair">+</span> FROM A SINGLE LINE OF CODE.</div>
+  </div>
+ </section>
+ <div class="discipline-bar"><div class="container"><span>CODE IS JUST THE BEGINNING.</span><div><span>GAME DEVELOPMENT</span><i></i><span>CREATIVE TOOLS</span><i></i><span>EXPERIMENTS</span></div></div></div>
+ <section class="section container" data-reveal>
+  <div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2>Featured projects<span class="count">{String(featured.length).padStart(2,'0')}</span></h2><p>触って、読んで、次の制作のヒントに。</p></div><a class="text-link" href={pathTo('projects/')}>すべての作品 <Icon name="arrow"/></a></div>
+  <div class="project-grid">{featured.map((p,index)=><ProjectCard project={p} index={index}/>)}</div>
+  {projects.some(p=>p.demo)&&<p class="demo-note"><span class="demo-dot"></span>「DEMO DATA」はサイトの表示確認用サンプルです。実際の配布作品とは区別して掲載しています。</p>}
+ </section>
+ <section class="latest-section section" data-reveal><div class="container latest-layout"><div><p class="eyebrow">02 / RECENTLY ADDED</p><h2>Latest<br/>updates<span class="purple-period">.</span></h2><p>制作の記録を、少しずつ。</p><a class="text-link" href={pathTo('projects/')}>作品一覧へ <Icon name="arrow"/></a></div><div class="latest-list">{latest.map((p,index)=><a class="latest-row" href={pathTo(`projects/${p.slug}/`)}><span class="latest-number">{String(index+1).padStart(2,'0')}</span><img src={imagePath(p.thumbnail)} width="160" height="90" loading="lazy" alt=""/><div><div class="latest-meta"><span>{p.category}</span><time datetime={p.publishedAt}>{dateLabel(p.publishedAt)}</time></div><h3>{p.title}</h3><p>{p.subtitle}</p></div><Icon name="external" size={22}/></a>)}</div></div></section>
+ <section class="section container" data-reveal><div class="about-preview"><div class="about-index">03<br/><span>BEHIND<br/>THE BUILD</span></div><div><p class="eyebrow">ABOUT THIS LAB</p><h2>完成品だけじゃない。<br/>作る楽しさも、共有したい。</h2><p>動かなかった一行も、はじめて表示できた画面も。<br/>試して、学んで、形にする。そんな制作の記録を集めています。</p><a class="text-link" href={pathTo('about/')}>このチャンネルについて <Icon name="arrow"/></a></div><div class="about-mark" aria-hidden="true">&lt;/&gt;</div></div></section>
+</Layout>

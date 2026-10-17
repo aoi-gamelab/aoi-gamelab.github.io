@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import {site,pathTo} from '../lib/site';
+---
+<Layout title="このサイトについて" description="ゲーム制作とツール開発の過程を共有する、GAME DEV LABの作品アーカイブ。学んで、作って、試すための場所。">
+ <section class="page-heading container"><p class="eyebrow">BEHIND THE BUILD</p><h1>Curiosity into code<span class="purple-period">.</span></h1><p>「作ってみたい」を、動くものに。</p></section>
+ <section class="container about-page"><div class="about-intro"><div class="about-monogram" aria-hidden="true"><span>&lt;</span><i>/</i><span>&gt;</span><small>IDEA → CODE → CREATE</small></div><div><p class="eyebrow">{site.channelName}</p><h2>作る過程も、<br/>作品の一部だから。</h2><p>ゲームを作る。繰り返す作業を、少し楽にする。気になった仕組みを、コードで試す。このサイトは、そんな制作の記録を集めたアーカイブです。</p><p>YouTubeでは、実際の画面とコードを交えながら、仕組みを一つずつ解説。ここでは、その動画につながる作品情報やサンプルプロジェクトをまとめています。</p><p>完成品を眺めるだけでなく、自分の手で動かして、変えてみる。次の「作ってみたい」につながればうれしいです。</p></div></div>
+ <section class="about-content-section"><p class="eyebrow">WHAT WE MAKE</p><h2>小さく作って、深く知る。</h2><div class="about-pillars"><article><Icon name="grid" size={30}/><span>01 / GAMES</span><h3>遊びを、仕組みから。</h3><p>C++とDxLibで学ぶ、入力・移動・描画の基本。小さな2Dゲームから制作を始めます。</p></article><article><Icon name="code" size={30}/><span>02 / TOOLS</span><h3>作業に、ひと工夫。</h3><p>面倒な手順を減らす、小さなツールやスクリプト。制作を支える工夫も記録します。</p></article><article><Icon name="file" size={30}/><span>03 / EXPERIMENTS</span><h3>まずは、試してみる。</h3><p>気になる技術や表現を、小さな実験に。結果だけでなく、考えた道筋も共有します。</p></article></div></section>
+ <section class="about-content-section about-technologies"><div><p class="eyebrow">THE TOOLBOX</p><h2>アイデアに合う、道具を選ぶ。</h2><p>ゲームからWebまで。目的に合わせて少しずつ学んでいきます。</p></div><div class="big-tags">{['C++','DxLib','Python','TypeScript','Astro','Web'].map(t=><span>{t}</span>)}</div></section>
+ <section class="about-cta"><p class="eyebrow">LET’S BUILD SOMETHING</p><h2>次の一歩は、ここから。</h2><div class="hero-actions"><a class="button button-primary" href={pathTo('projects/')}>作品を見てみる <Icon name="arrow"/></a>{site.youtubeUrl&&<a class="button button-outline" href={site.youtubeUrl} target="_blank" rel="noopener noreferrer"><Icon name="youtube"/>YouTubeを見る</a>}{site.githubUrl&&<a class="button button-outline" href={site.githubUrl} target="_blank" rel="noopener noreferrer"><Icon name="github"/>GitHub</a>}</div></section>
+ </section>
+</Layout>

@@ -1,0 +1,79 @@
+{
+  "slug": "dxlib-move-circle",
+  "title": "矢印キーで円を動かそう",
+  "subtitle": "C++ × DxLib / EPISODE 02",
+  "description": "変数・if・whileを、プレイヤーの動きへ。上下左右の移動と、画面端で止める処理を学ぶ小さなサンプル。",
+  "category": "GAME",
+  "technologies": [
+    "C++",
+    "DxLib",
+    "Visual Studio"
+  ],
+  "status": "公開中",
+  "publishedAt": "2026-10-17",
+  "updatedAt": "2026-10-17",
+  "featured": true,
+  "demo": false,
+  "thumbnail": "/images/move-circle.webp",
+  "heroImage": "/images/move-circle.webp",
+  "screenshots": [
+    {
+      "src": "/images/gameplay.webp",
+      "alt": "座標と操作方法を表示した円の実行画面"
+    },
+    {
+      "src": "/images/move-code.webp",
+      "alt": "Visual Studioで開いた実際のMain.cpp"
+    },
+    {
+      "src": "/images/move-boundary.webp",
+      "alt": "画面端へ移動した円の実行結果"
+    }
+  ],
+  "overview": [
+    "前回の「円を表示する」サンプルから、キーで操作できるプレイヤーへ。位置を変数で覚え、条件に合わせて更新し、毎フレーム描き直す基本をまとめました。",
+    "完成したゲームそのものではなく、よけるゲームにつながるプレイヤー操作の学習サンプルです。入力・更新・描画を分けて読むことで、C++の基本構文が何に使われるかを確かめられます。"
+  ],
+  "features": [
+    "矢印キーで上下左右に移動",
+    "半径を考慮して画面端で止める",
+    "座標と操作方法を画面内に表示",
+    "Escキー、またはウィンドウを閉じて終了"
+  ],
+  "technicalNotes": [
+    "640×480のウィンドウ。変数・const・if・whileを使った小さな構成です。",
+    "裏画面を消去し、座標を更新して描画し、ScreenFlipで表示します。",
+    "WaitTimer(16)は簡単な待ち時間です。厳密な60fpsや一定の毎秒移動速度を保証するものではありません。",
+    "斜め移動の距離の正規化は含めていません。発展課題として扱います。"
+  ],
+  "youtubeUrl": "",
+  "downloadUrl": "https://github.com/aoi-gamelab/aoi-gamelab.github.io/releases/download/v1.0.0/dxlib-move-circle-v1.0.0.zip",
+  "fileName": "dxlib-move-circle-v1.0.0.zip",
+  "fileSize": 4398,
+  "version": "1.0.0",
+  "platform": [
+    "Windows 11"
+  ],
+  "requirements": [
+    "Visual Studio Community 2026",
+    "C++によるデスクトップ開発",
+    "DxLib Visual C++版 3.25a"
+  ],
+  "installationSteps": [
+    "GitHub ReleasesからZIPをダウンロードし、展開します。",
+    "公式サイトからDxLib Visual C++版を入手します。ライブラリ本体はサンプルに同梱していません。",
+    "READMEに記載したフォルダー構成でDxLibを配置するか、プロパティの参照先を変更します。",
+    "project/MoveCircle.slnxをVisual Studioで開きます。",
+    "Debug / x64を選び、F5で実行。矢印キーで円を動かします。"
+  ],
+  "changelog": [
+    {
+      "date": "2026-10-17",
+      "version": "1.0.0",
+      "changes": [
+        "移動・画面端の制限・操作方法と座標の表示を実装。",
+        "Debug / Releaseのx64ビルドと移動ロジックを確認。"
+      ]
+    }
+  ]
+}

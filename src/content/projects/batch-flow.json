@@ -1,0 +1,43 @@
+{
+  "slug": "batch-flow",
+  "title": "Batch Flow",
+  "subtitle": "SAMPLE PROJECT / DEMO",
+  "description": "ファイルの整理と一括変換を想定した、小さな作業ツールのコンセプト。",
+  "category": "TOOL",
+  "technologies": [
+    "Python"
+  ],
+  "status": "デモ",
+  "publishedAt": "2026-10-12",
+  "updatedAt": "2026-10-12",
+  "featured": true,
+  "demo": true,
+  "thumbnail": "/images/batch-flow.svg",
+  "heroImage": "/images/batch-flow.svg",
+  "screenshots": [
+    {
+      "src": "/images/batch-flow.svg",
+      "alt": "Batch Flowの自作コンセプト図"
+    }
+  ],
+  "overview": [
+    "このページは、作品ギャラリーの表示と操作を確認するための架空のサンプルデータです。実際の制作実績・公開済みソフトウェアではありません。",
+    "実際の作品を登録する際は、このJSONを差し替えるか削除してください。ダウンロードURLや動画URLは設定していません。"
+  ],
+  "features": [
+    "カテゴリ・技術タグによる分類の表示例",
+    "作品紹介とスクリーンショットの表示例"
+  ],
+  "technicalNotes": [
+    "実装済みソフトウェアではなく、サイトのデータ管理を説明するためのデモです。"
+  ],
+  "youtubeUrl": "",
+  "downloadUrl": "",
+  "fileName": "",
+  "fileSize": 0,
+  "version": "",
+  "platform": [],
+  "requirements": [],
+  "installationSteps": [],
+  "changelog": []
+}

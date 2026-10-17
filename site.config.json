@@ -1,0 +1,16 @@
+{
+  "name": "PROJECT ARCHIVE",
+  "channelName": "GAME DEV LAB",
+  "description": "ゲーム、ツール、ソフトウェア。制作の過程と、手を動かすためのプロジェクトを集めた作品アーカイブ。",
+  "youtubeUrl": "https://www.youtube.com/channel/UCLNmzlgP-6tWhQzkd8C9rXQ",
+  "githubUrl": "https://github.com/aoi-gamelab/aoi-gamelab.github.io",
+  "logo": "",
+  "ogImage": "/images/og-default.png",
+  "showDemoProjects": true,
+  "deployment": {
+    "githubOwner": "aoi-gamelab",
+    "githubRepository": "aoi-gamelab.github.io",
+    "siteUrl": "",
+    "basePath": ""
+  }
+}

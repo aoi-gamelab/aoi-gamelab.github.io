@@ -1,0 +1,6 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import {pathTo} from '../lib/site';
+---
+<Layout title="ページが見つかりません"><section class="container not-found"><p class="eyebrow">404 / LOST IN THE ARCHIVE</p><h1>ここには、まだ<br/>作品がないようです。</h1><p>URLが変更されたか、ページが存在しません。作品一覧から探してみてください。</p><a class="button button-primary" href={pathTo('projects/')}>作品一覧へ <Icon name="arrow"/></a></section></Layout>

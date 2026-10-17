@@ -1,0 +1,7 @@
+---
+import {site,pathTo,imagePath} from '../lib/site';
+---
+<a class="brand" href={pathTo()} aria-label={`${site.name} ホーム`}>
+  {site.logo ? <img src={imagePath(site.logo)} width="30" height="30" alt=""/> : <svg class="brand-symbol" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M2 2h11v11H2zM17 2h11v11H17zM2 17h11v11H2z" fill="currentColor"/><path d="m17 17 11 11M28 17 17 28" stroke="#a99aff" stroke-width="3"/></svg>}
+  <span>{site.name}<small>CREATIVE DEVELOPMENT LAB</small></span>
+</a>

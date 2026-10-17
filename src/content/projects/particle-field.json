@@ -1,0 +1,44 @@
+{
+  "slug": "particle-field",
+  "title": "Particle Field",
+  "subtitle": "SAMPLE PROJECT / DEMO",
+  "description": "粒子の流れと奥行きをテーマにした、ビジュアル実験のコンセプト。",
+  "category": "EXPERIMENT",
+  "technologies": [
+    "C++",
+    "DirectX"
+  ],
+  "status": "デモ",
+  "publishedAt": "2026-10-08",
+  "updatedAt": "2026-10-08",
+  "featured": true,
+  "demo": true,
+  "thumbnail": "/images/particle-field.svg",
+  "heroImage": "/images/particle-field.svg",
+  "screenshots": [
+    {
+      "src": "/images/particle-field.svg",
+      "alt": "Particle Fieldの自作コンセプト図"
+    }
+  ],
+  "overview": [
+    "このページは、作品ギャラリーの表示と操作を確認するための架空のサンプルデータです。実際の制作実績・公開済みソフトウェアではありません。",
+    "実際の作品を登録する際は、このJSONを差し替えるか削除してください。ダウンロードURLや動画URLは設定していません。"
+  ],
+  "features": [
+    "カテゴリ・技術タグによる分類の表示例",
+    "作品紹介とスクリーンショットの表示例"
+  ],
+  "technicalNotes": [
+    "実装済みソフトウェアではなく、サイトのデータ管理を説明するためのデモです。"
+  ],
+  "youtubeUrl": "",
+  "downloadUrl": "",
+  "fileName": "",
+  "fileSize": 0,
+  "version": "",
+  "platform": [],
+  "requirements": [],
+  "installationSteps": [],
+  "changelog": []
+}
